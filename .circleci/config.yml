@@ -1,0 +1,43 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@2.5.0
+
+jobs:
+  build-and-test:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: default
+
+    steps:
+      - checkout
+
+      - run:
+          name: Clean Gradle Cache
+          command: rm -rf ~/.gradle/caches
+
+      - run:
+          name: Grant execute permission to gradlew
+          command: chmod +x gradlew
+
+      - run:
+          name: Sync Gradle
+          command: ./gradlew clean build --refresh-dependencies
+
+      - android/run-tests:
+          test-command: ./gradlew lint testDebug --continue
+
+      - android/start-emulator-and-run-tests:
+          test-command: ./gradlew connectedDebugAndroidTest
+          system-image: system-images;android-24;google_apis;x86
+
+      - run:
+          name: Assemble release build
+          command: |
+            ./gradlew assembleRelease
+
+workflows:
+  sample:
+    jobs:
+      - build-and-test
