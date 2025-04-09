@@ -40,6 +40,8 @@ android {
         jvmTarget = "17"
     }
     dynamicFeatures += setOf(":favorite")
+
+    configurations { implementation.get().exclude(mapOf("group" to "org.jetbrains", "module" to "annotations"))}
 }
 
 configurations.all {

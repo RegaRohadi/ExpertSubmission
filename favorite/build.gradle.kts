@@ -28,6 +28,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    configurations { implementation.get().exclude(mapOf("group" to "org.jetbrains", "module" to "annotations"))}
 }
 
 configurations.all {
