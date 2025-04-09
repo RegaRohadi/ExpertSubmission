@@ -6,3 +6,9 @@ plugins {
     alias(libs.plugins.android.dynamic.feature) apply false
     alias(libs.plugins.ksp) apply false
 }
+
+configurations.all {
+    resolutionStrategy {
+        force ("org.jetbrains:annotations:23.0.0")
+    }
+}
