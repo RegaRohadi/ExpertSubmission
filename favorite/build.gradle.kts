@@ -30,6 +30,10 @@ android {
     }
 }
 
+configurations.all {
+    exclude(group = "com.intellij", module = "annotations")
+}
+
 dependencies {
     implementation(project(":app"))
     implementation(project(":core"))
